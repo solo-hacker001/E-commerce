@@ -1,0 +1,7 @@
+export default function Home() {
+  return (
+    <main>
+      <h1>New E-Commerce website</h1>
+    </main>
+  );
+}
