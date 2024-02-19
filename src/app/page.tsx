@@ -1,7 +1,11 @@
+import Banner from "@/components/Banner";
+import Products from "@/components/Products";
+
 export default function Home() {
   return (
     <main>
-      <h1>New E-Commerce website</h1>
+      <Banner />
+      <Products />
     </main>
   );
 }
