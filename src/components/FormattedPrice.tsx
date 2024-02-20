@@ -1,9 +1,21 @@
-import React from 'react'
+import { cn } from "@/lib/utils";
 
-const FormattedPrice = () => {
+type Props = {
+  amount: number;
+  className?: string;
+};
+
+const FormattedPrice = ({ amount, className }: Props) => {
+  const formattedAmount = new Number(amount).toLocaleString("en-US", {
+    style: "currency",
+    currency: "NGN",
+    maximumFractionDigits: 2,
+  });
   return (
-    <div>FormattedPrice</div>
-  )
-}
+    <span className={cn("text-base text-black", className)}>
+      {formattedAmount}
+    </span>
+  );
+};
 
-export default FormattedPrice
+export default FormattedPrice;

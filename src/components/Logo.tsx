@@ -18,13 +18,13 @@ const Logo = ({ className, spanClassName }: Props) => {
     >
       <span
         className={cn(
-          "bg-zinc-950 text-white w-8 h-8 rounded-full inline-flex items-center justify-center text-2xl font-bold mr-1 group-hover:bg-blue-700 duration-200",
+          "bg-zinc-950 text-white w-8 h-8 rounded-full inline-flex items-center justify-center text-2xl font-bold mr-1 group-hover:bg-green-700 duration-200",
           spanClassName
         )}
       >
-        V
+        N
       </span>
-      ickeeStore
+      aijaStore
     </Link>
   );
 };

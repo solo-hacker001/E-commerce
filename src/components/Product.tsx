@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ProductType, StateProps } from "../../type";
 import Image from "next/image";
 import { Heart } from "lucide-react";
+import FormattedPrice from "./FormattedPrice";
 
 interface Item {
   products: ProductType[];
@@ -15,7 +16,7 @@ const Product = ({ products }: Item) => {
           key={item._id}
           className="relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-500 duration-300 hover:shadow-xl overflow-hidden"
         >
-          <Link href={"/"}>
+          <Link href={{ pathname: `/${item?._id}`, query: { _id: item?._id } }}>
             <Image
               src={item?.image}
               alt="Product image"
@@ -32,7 +33,20 @@ const Product = ({ products }: Item) => {
             <p className="group-hover:text-designColor duration-300">
               {item?.title}
             </p>
-            <p className="font-semibold">{item?.price}</p>
+            <p className="font-semibold">
+              <FormattedPrice amount={item?.price} />
+            </p>
+            <div className="flex items-center justify-between text-sm mt-2">
+              <button className="uppercase font-semibold hover:text-designColor duration-300">
+                Add to cart
+              </button>
+              <Link
+                className="uppercase font-semibold hover:text-designColor duration-300"
+                href={{ pathname: `/${item?._id}`, query: { _id: item?._id } }}
+              >
+                More Info
+              </Link>
+            </div>
           </div>
         </div>
       ))}
