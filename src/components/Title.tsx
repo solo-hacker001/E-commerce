@@ -13,7 +13,7 @@ const Title = ({ title, className }: Props) => {
         className
       )}
     >
-      Title
+      {title}
     </h2>
   );
 };

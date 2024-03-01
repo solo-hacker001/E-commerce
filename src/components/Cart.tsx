@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ProductType, StateProps } from "../../type";
 import { Minus, Plus, X } from "lucide-react";
@@ -17,10 +17,50 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const Cart = () => {
+  const [totalAmt, setTotalAmt] = useState(0);
+  const [rowPrice, setRowPrice] = useState(0);
   const { productData, favoriteData } = useSelector(
     (state: StateProps) => state.pro
   );
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleReset = () => {
+    const confirmReset = window.confirm(
+      "Are you sure you want to reset your Cart?"
+    );
+    if (confirmReset) {
+      dispatch(resetCart());
+      toast.success("Cart Reset Successfully");
+      router.push("/");
+    }
+  };
+
+  // Price value
+  useEffect(() => {
+    let amt = 0;
+    let rowAmt = 0;
+    productData.map((item: ProductType) => {
+      amt += item.price * item.quantity;
+      return;
+    });
+    productData.map((item: ProductType) => {
+      rowAmt += item?.previousPrice * item?.quantity;
+    });
+    setTotalAmt(amt);
+    setRowPrice(rowAmt);
+  }, [productData]);
+
+  const handleCheckout = () => {
+    const checkout = window.confirm(
+      "Your Order has been placed scuccessfully!"
+    );
+    if (checkout) {
+      toast.success("Order placed Successfully");
+      router.push("/");
+    }
+  };
+
   return (
     <>
       {productData.length > 0 ? (
@@ -107,7 +147,7 @@ const Cart = () => {
                     <td className="px-6 py-4">
                       <p className="bg-zinc-900 w-20 text-sm font-semibold text-center text-white py-1 rounded-md">
                         {calculatePercentage(item?.price, item?.previousPrice)}{" "}
-                        %save
+                        % saved
                       </p>
                     </td>
                   </tr>
@@ -115,10 +155,57 @@ const Cart = () => {
               ))}
             </table>
           </div>
+          <button
+            onClick={handleReset}
+            className="bg-zinc-950 text-zinc-200 w-36 py-3 mt-5 rounded-md uppercase text-xs font-semibold hover:bg-red-700 hover:text-white duration-200"
+          >
+            Reset Cart
+          </button>
+          <div className="mt-4 bg-white max-w-xl p-4 flex flex-col gap-1">
+            <p className="border-b-[1px] border-b-designColor py-1">
+              Cart Summary
+            </p>
+            <p className="flex items-center justify-between">
+              Total Items <span>{productData.length}</span>
+            </p>
+            <p className="flex items-center justify-between">
+              Price{" "}
+              <span>
+                <FormattedPrice amount={rowPrice} />
+              </span>
+            </p>
+            <p className="flex items-center justify-between">
+              Discount{" "}
+              <span>
+                <FormattedPrice amount={rowPrice - totalAmt} />
+              </span>
+            </p>
+            <p className="flex items-center justify-between">
+              Total Price{" "}
+              <span>
+                <FormattedPrice
+                  amount={totalAmt}
+                  className="font-semibold text-lg"
+                />
+              </span>
+            </p>
+            <button
+              onClick={handleCheckout}
+              className="bg-zinc-800 text-zinc-200 my-2 py-2 uppercase text-center rounded-md font-semibold hover:bg-black hover:text-white duration-200"
+            >
+              Proceed to Checkout
+            </button>
+          </div>
         </div>
       ) : (
-        <div>
-          <p>Your Cart is Empty</p>
+        <div className="py-10 flex flex-col gap-1 items-center justify-center">
+          <p className="text-lg font-bold">Your Cart is Empty</p>
+          <Link
+            href={"/"}
+            className="text-sm uppercase font-semibold underline underline-offset-2 hover:text-designColor duration-200 cursor-pointer"
+          >
+            Go back to Shopping
+          </Link>
         </div>
       )}
       <Toaster

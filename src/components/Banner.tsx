@@ -139,21 +139,21 @@ const Banner = () => {
         <div className="flex items-center gap-5 w-60">
           <Clock className="text-designColor w-8 h-8" />
           <div>
-            <p>Saturday - Thursday</p>
-            <p className="font-semibold">7:00 - 20:00</p>
+            <p>Sunday - Saturday</p>
+            <p className="font-semibold">9:00 am - 22:00 pm</p>
           </div>
         </div>
         <div className="flex items-center gap-5 w-60">
           <Smartphone className="text-designColor w-8 h-8" />
           <div>
-            <p>+ 018 0000 0000</p>
+            <p>+ 244 803 661 7686</p>
             <p className="font-semibold">Order by Phone</p>
           </div>
         </div>
         <div className="flex items-center gap-5 w-60">
           <Map className="text-designColor w-8 h-8" />
           <div>
-            <p>Mirpur, Dhaka</p>
+            <p>Lagos, Nigeria</p>
             <p className="font-semibold">Address</p>
           </div>
         </div>
